@@ -44,6 +44,11 @@ int main(void)
 	int status;
 	pid_t child_pid;
 	
+	if (!isatty(STDIN_FILENO))
+	{
+		printf("non_interactive\n");
+		return (0);
+	}
 	while (1)
 	{
 		printf("command: ");
