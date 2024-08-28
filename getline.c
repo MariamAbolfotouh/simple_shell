@@ -5,7 +5,16 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-char ** token_str(char *inp, char *delim)
+/**
+ * token_str - jkjg
+ *
+ * @inp: input
+ * @delim: delimeter
+ *
+ * Return: tkens
+ */
+
+char **token_str(char *inp, char *delim)
 {
 	int size = 1;
 	char **tkens;
@@ -27,6 +36,12 @@ char ** token_str(char *inp, char *delim)
 	return (tkens);
 }
 
+/**
+ * prt_tkens - df
+ *
+ * @tkens: tokens
+ */
+
 void prt_tkens(char **tkens)
 {
 	int i = 0;
@@ -43,7 +58,7 @@ int main(void)
 	size_t l_inp = 0;
 	int status;
 	pid_t child_pid;
-	
+
 	if (!isatty(STDIN_FILENO))
 	{
 		printf("non_interactive\n");
@@ -57,47 +72,26 @@ int main(void)
 		if (rd == -1)
 		{
 			free(inp);
-			printf("\nthe program failed to read the line or it was interrupted\n");
 			return (1);
 		}
 		else
 		{
-			/**
-			printf("%s\n", inp);
-			printf("the num of the chararcters read is %d\n", rd);
-			printf("i/p was %s\n", inp);
-
-			char *tkn = strtok(inp, " \t\n");
-			while (tkn != NULL)
-			{
-				printf("%s\n", tkn);
-				tkn = strtok(NULL, " \t\n");
-			}
-			*/
 			child_pid = fork();
 			if (child_pid == -1)
 			{
 				perror("Error:");
-				return (1);
-			}
+				return (1);	}
 			if (child_pid == 0)
 			{
 				char **argv = token_str(inp, " \t\n");
 
 				prt_tkens(argv);
 				if (execve(argv[0], argv, NULL) == -1)
-				{
 					perror("Error:");
-				}
-				//free_tkens(argv);
-				return (0);
-			}
-			wait(&status);
-		}
+				return (0);	}
+			wait(&status);	}
 			free(inp);
-			inp = NULL;
-	}
-
+			inp = NULL;	}
 	free(inp);
 	return (0);
 }
