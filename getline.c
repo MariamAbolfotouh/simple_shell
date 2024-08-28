@@ -4,6 +4,39 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+
+char ** token_str(char *inp, char *delim)
+{
+	int size = 1;
+	char **tkens;
+	char *tken;
+	int i;
+
+	tkens = malloc(size * sizeof(char *));
+	tken = strtok(inp, delim);
+	while (tken != NULL)
+	{
+		i = size - 1;
+		size++;
+		tkens = realloc(tkens, size * sizeof(char *));
+		tkens[i] = malloc(strlen(tken) * sizeof(char));
+		strcpy(tkens[i], tken);
+		tken = strtok(NULL, delim);
+	}
+	tkens[size - 1] = NULL;
+	return (tkens);
+}
+
+void prt_tkens(char **tkens)
+{
+	int i = 0;
+
+	while (tkens[i] != NULL)
+	{
+		printf("%s\n", tkens[i++]);
+	}
+}
+
 int main(void)
 {
 	char *inp = NULL;
@@ -44,12 +77,14 @@ int main(void)
 			}
 			if (child_pid == 0)
 			{
-				char *argv[] = {"/bin/ls", "-l", "/usr/", NULL};
+				char **argv = token_str(inp, " \t\n");
 
+				prt_tkens(argv);
 				if (execve(argv[0], argv, NULL) == -1)
 				{
 					perror("Error:");
 				}
+				//free_tkens(argv);
 				return (0);
 			}
 			wait(&status);
