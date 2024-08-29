@@ -52,6 +52,12 @@ void prt_tkens(char **tkens)
 	}
 }
 
+/**
+ * main - Entry point
+ *
+ * Return: 0
+ */
+
 int main(void)
 {
 	char *inp = NULL;
