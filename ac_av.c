@@ -1,5 +1,14 @@
 #include <stdio.h>
 
+/**
+ * main - Entry point
+ *
+ * @ac: ihi
+ * @av: ave
+ *
+ * Return: 0
+ */
+
 int main(int ac, char **av)
 {
 	int n;
@@ -11,12 +20,6 @@ int main(int ac, char **av)
 	{
 		printf("%d : %s\n", n + 1, av[n]);
 	}
-
-/**	while (av[n] != NULL)
-	{
-		printf("%d : %s\n", n + 1, av[n++]);
-	}
-*/
 
 	return (0);
 }
